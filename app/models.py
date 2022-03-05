@@ -1,7 +1,6 @@
-# from app import create_app
-# from flask_script import Manager,Server
+from . import db
 
+class User(db.Model):
+    __tablename__ = 'users'
 
-
-# if __name__=='__main__':
-#     manager.run()
+    id = 

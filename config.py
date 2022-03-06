@@ -4,7 +4,7 @@ class Config:
     '''
     General configuration parent class
     '''
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://memory:MEM99ory@localhost/pitches'
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'You-will-never-guess'
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")

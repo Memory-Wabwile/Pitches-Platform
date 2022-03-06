@@ -13,8 +13,8 @@ def create_app(config_name):
 
     #Creating app configurations
     app.config.from_object(config_options[config_name])
+    from .auth import auth as auth_blueprint
    
-
     #initialzing flask extensions
     bootstrap.init_app(app)
     db.init_app(app)
@@ -22,6 +22,7 @@ def create_app(config_name):
     # Registering the blueprint
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
+    app.register_blueprint(auth_blueprint,url_prefix = '/authenticate')
 
 
     return app

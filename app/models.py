@@ -11,7 +11,8 @@ class User(UserMixin,db.Model):
     email = db.Column(db.String(255),unique=True,index=True)
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
-    password_secure = db.Column(db.String(255))
+    password_hash = db.Column(db.String(255))
+    # pitchee = db.Column(db.Integer , db.ForeignKey('pitch.id'))
 
     @property
     def password(self):
@@ -31,5 +32,14 @@ class User(UserMixin,db.Model):
     def __repr__(self):
         return f'User{self.username}'
 
+
+class Pitches(db.Model):
+    __tablename__ = 'pitch'
+
+    id = db.Column(db.Integer,primary_key = True)
+    name = db.Column(db.String(255))
+
+    def __repr__(self):
+        return f'{self.name}'
 
 

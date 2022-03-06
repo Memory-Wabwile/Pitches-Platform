@@ -1,3 +1,4 @@
+from datetime import datetime
 from app import db , login_manager
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
@@ -37,9 +38,39 @@ class Pitches(db.Model):
     __tablename__ = 'pitch'
 
     id = db.Column(db.Integer,primary_key = True)
-    name = db.Column(db.String(255))
+    title = db.Column(db.String(255))
+    category = db.Column(db.String(255))
+    pitch = db.Column(db.String(255))
+    time = db.Column(db.DateTime,default = datetime.utcnow)
+    name = db.Column(db.Integer , db.ForeignKey('users.id'))
+    comment = db.relationship('Comment' , backref='pitches' , lazy='dynamic')
+    upvote = db.relationship('Upvote' ,backref='pitches', lazy='dynamic' )
+    downvote = db.relationship('Downvote' , backref='pitches' , lazy='dynamic')
 
     def __repr__(self):
-        return f'{self.name}'
+        return f'{self.pitch}'
 
 
+class Comment(db.Model):
+    __tablename__='comments'
+
+    id = db.Column(db.Integer,primary_key = True)
+    commment = db.Column(db.Text(),nullable = False)
+    name = db.Column(db.Integer , db.ForeignKey('users.id'))
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
+
+
+class Upvote(db.Model):
+    __tablename__='upvotes'
+
+    id = db.Column(db.Integer,primary_key = True)
+    name = db.Column(db.Integer , db.ForeignKey('users.id'))
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
+
+
+class Downvote(db.Model):
+    __tablename__='downvotes'
+
+    id = db.Column(db.Integer,primary_key = True)
+    name = db.Column(db.Integer , db.ForeignKey('users.id'))
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))

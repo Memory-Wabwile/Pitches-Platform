@@ -9,7 +9,7 @@ class User(UserMixin,db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(255),index=True)
-    email = db.Column(db.String(255),unique=True,index=True)
+    email = db.Column(db.String(255),unique=True,index=True,nullable=False)
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     password_hash = db.Column(db.String(255))
@@ -25,6 +25,14 @@ class User(UserMixin,db.Model):
 
     def verify_password(self,password):
         return check_password_hash(self.password_hash,password)
+
+    def save_user(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_user(self):
+        db.session.delete(self)
+        db.session.commit()
 
     @login_manager.user_loader
     def load_user(user_id):

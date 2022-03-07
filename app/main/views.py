@@ -4,7 +4,7 @@ from ..models import User, Pitches,Comment,Upvote,Downvote
 from . import main
 from flask_login import current_user, login_required 
 from .forms import UpdateProfile
-from .. import db
+from .. import db,photos
 
 @main.route('/')
 def index():

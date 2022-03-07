@@ -18,7 +18,7 @@ def index():
 
     return render_template('index.html', Interview=Interview , Promotion=Promotion, Products=Products,PickupLines=PickupLines, Sports=Sports, Entertainment=Entertainment)
 
-@main.route('\pitch')
+@main.route('/pitch')
 @login_required
 def pitch():
     pitch = Pitches.query.all()

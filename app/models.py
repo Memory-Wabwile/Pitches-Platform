@@ -103,6 +103,9 @@ class Upvote(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    def __repr__(self):
+        return f'Upvote:{self.upvote}'
+
 
 class Downvote(db.Model):
     __tablename__='downvotes'
@@ -116,4 +119,9 @@ class Downvote(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def delete
+    def delete_downvote(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f'downvote : {self.downvote}'

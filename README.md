@@ -5,7 +5,7 @@ Memory Wabwile<br>
  https://github.com/Memory-Wabwile
 
 ## Description
-Pitches platform is an application taht enales users to add their one minute pitch after successfully signing up and logging into the system. Users can also comments and vote on the pitches. 
+Pitches platform is an application that enables users to add their one minute pitch after successfully signing up and logging into the system. Users can also comments and vote on the pitches. 
 
 
 ## Live Site

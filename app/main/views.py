@@ -5,6 +5,10 @@ from . import main
 from flask_login import current_user, login_required 
 from .forms import UpdateProfile
 from .. import db,photos
+from .forms import PostForm,CommentForm,UpdateProfile
+from flask.helpers import flash
+
+
 
 @main.route('/')
 def index():
@@ -71,3 +75,60 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
+
+
+@main.route('/new_pitches',methods=['GET','POST'])
+@login_required
+def new_pitches():
+
+    form = PostForm()
+
+    if form.validate_on_submit():
+        title = form.title.data
+        category = form.category.data
+        pitch = form.pitches.data
+        user_id = current_user._get_current_object().id
+
+        new_pitches = Pitches(title=title,pitch=pitch,category=category,user_id=user_id)
+        new_pitches.save()
+        db.session.add(new_pitches)
+        db.session.commit()
+
+        return redirect(url_for('main.index'))
+
+
+@main.route('/user')
+@login_required
+def user():
+    username = current_user.username
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        return('Sorry !! User not found try again')
+    return render_template('profile.html',user=user)
+
+
+
+# @main.route('/comment/<int:pitch_id>', method=['GET','POST'])
+# @login_required
+# def comment(pitch_id):
+
+#     form = CommentForm()
+
+#     pitch = Pitches.query.get(pitch_id)
+#     user = User.query.all()
+#     comments = Comment.query.filter_by(pitch_id=pitch_id).all()
+
+#     if form.validate_on_submit():
+#         comment = form.comment.data
+#         pitch_id = pitch_id
+#         user_id = current_user._get_current_object().id
+
+#         new_comment = Comment(comment=comment,pitch_id=pitch_id,user_id=user_id)
+
+#         new_comment.save_comment()
+#         newest_comment= [new_comment]
+#         flash('Comment added successfully')
+#         return redirect(url_for('comment', pitch_id = pitch_id))
+    
+#     return render_template('comment.html', form=form,comments=comments,pitch=pitch,user=user)
+        

@@ -4,34 +4,9 @@
 
 
 {% block content %}
-<div class="container-row">
+<h1 style="text-align: center; font-weight: bolder;" >THE PITCHES PLATFORM</h1><hr ><hr/>
+<div  class="container-row">
     {{macro.display(pitch)}}
 </div>
 
-{% for pitches in pitch %}
-<div class="col-md-4">
-    <div class="card">
-        <div class="card-header">
-            {{pitches.title}}
-        </div>
-
-        <div class="card-body">
-            <h4 class="card-title">
-                {{pitches.category}}
-            </h4>
-            <p class="card-text">
-                {{pitches.pitch}}
-            </p>
-            <p>
-                {{pitches.time}}
-            </p>
-            
-            
-        </div>
-    </div>
-</div>
-
-{% endfor %}
 {% endblock %}
-
-

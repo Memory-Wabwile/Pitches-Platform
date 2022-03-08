@@ -5,35 +5,7 @@
 
 {% block content %}
 <h1 style="text-align: center; font-weight: bolder; " >THE PITCHES PLATFORM</h1><hr >
-<div class="div">
-    <ul style="align-items: center; padding-top: 1%; padding-bottom: 1%;" class="navbar-nav mr-auto">
-        <li>
-            <a class="nav-link" href="/"><button type="button" class="btn btn-outline"
-                    style="margin-right: 15px; margin-left: 10%; background-color: fuchsia; color: black; font-size: 1.5em;">Interview
-                </button><span class="sr-only">(current)</span></a>
-        </li>
-        <li>
-            <a class="nav-link" href="/{{'category/Business'}}"><button type="button" class="btn btn-outline"
-                    style="margin-right: 15px; background-color: fuchsia; color: black; font-size: 1.5em;">Promotion</button></a>
-        </li>
-        <li>
-            <a class="nav-link" href="/{{'category/Technology'}}"><button type="button" class="btn btn-outline"
-                    style="margin-right: 15px; background-color: fuchsia; color: black; font-size: 1.5em;">Products</button></a>
-        </li>
-        <li>
-            <a class="nav-link" href="/{{'category/Science'}}"><button type="button" class="btn btn-outline"
-                    style="margin-right: 15px; background-color: fuchsia; color: black; font-size: 1.5em;">PickupLines</button></a>
-        </li>
-        <li>
-            <a class="nav-link" href="/{{'category/Sports'}}"><button type="button" class="btn btn-outline"
-                    style="margin-right: 15px; background-color: fuchsia; color: black; font-size: 1.5em;">Sports</button></a>
-        </li>
-        <li>
-            <a class="nav-link" href="/{{'category/Entertainment'}}"><button type="button" class="btn btn-outline"
-                    style=" background-color: fuchsia; color: black; font-size: 1.5em;">Entertainment</button></a>
-        </li>
-    </ul>
-</div>
+
 <div  class="container-row">
     {{macro.display(pitch)}}
 </div>

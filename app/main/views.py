@@ -17,8 +17,8 @@ def index():
     PickupLines = Pitches.query.filter_by(category='PickupLines').all
     Sports = Pitches.query.filter_by(category='Sports').all()
     Entertainment = Pitches.query.filter_by(category='Entertainment').all()
-
-    return render_template('index.html', Interview=Interview , Promotion=Promotion, Products=Products,PickupLines=PickupLines, Sports=Sports, Entertainment=Entertainment)
+    pitch = Pitches.query.all()
+    return render_template('index.html', Interview=Interview , Promotion=Promotion, Products=Products,PickupLines=PickupLines, Sports=Sports, Entertainment=Entertainment , pitch = pitch)
 
 @main.route('/pitch')
 @login_required

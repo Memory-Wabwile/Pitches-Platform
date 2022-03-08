@@ -55,6 +55,14 @@ class Pitches(db.Model):
     upvote = db.relationship('Upvote' ,backref='pitches', lazy='dynamic' )
     downvote = db.relationship('Downvote' , backref='pitches' , lazy='dynamic')
 
+    def save_pitch(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_pitch(self):
+        db.session.delete(self)
+        db.session.commit()
+
     def __repr__(self):
         return f'{self.pitch}'
 
@@ -63,22 +71,49 @@ class Comment(db.Model):
     __tablename__='comments'
 
     id = db.Column(db.Integer,primary_key = True)
-    commment = db.Column(db.Text(),nullable = False)
+    comment = db.Column(db.Text(),nullable = False)
     name = db.Column(db.Integer , db.ForeignKey('users.id'))
     pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f'{self.comment}'
 
 
 class Upvote(db.Model):
     __tablename__='upvotes'
 
     id = db.Column(db.Integer,primary_key = True)
+    upvote = db.Column(db.Integer)
     name = db.Column(db.Integer , db.ForeignKey('users.id'))
     pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
+
+    def save_upvote(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def save_upvote(self):
+        db.session.add(self)
+        db.session.commit()
 
 
 class Downvote(db.Model):
     __tablename__='downvotes'
 
     id = db.Column(db.Integer,primary_key = True)
+    downvote = db.Column(db.Integer)
     name = db.Column(db.Integer , db.ForeignKey('users.id'))
     pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
+
+    def save_downvote(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete

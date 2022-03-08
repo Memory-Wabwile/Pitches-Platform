@@ -1,13 +1,37 @@
 {% extends 'base.html'%}
+{% import "bootstrap/wtf.html" as wtf %}
 {% import 'macros.html' as macro%}
 
 
-{% block title %}
-Pitch-Perfect
-{% endblock title %}
-
-{% block main %}
-<div class="container">
-    <h1 class="text-center">All Pitches</h1>
+{% block content %}
+<div class="container-row">
+    {{macro.display(pitch)}}
 </div>
-{% endblock main %}
+
+{% for pitches in pitch %}
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-header">
+            {{pitches.title}}
+        </div>
+
+        <div class="card-body">
+            <h4 class="card-title">
+                {{pitches.category}}
+            </h4>
+            <p class="card-text">
+                {{pitches.pitch}}
+            </p>
+            <p>
+                {{pitches.time}}
+            </p>
+            
+            
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+{% endblock %}
+
+

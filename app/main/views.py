@@ -94,7 +94,10 @@ def new_pitches():
         db.session.add(new_pitches)
         db.session.commit()
 
+        flash('Pitch Created successfully')
         return redirect(url_for('main.index'))
+
+    return render_template('pitch.html', form=form)
 
 
 @main.route('/user')
@@ -132,3 +135,56 @@ def user():
     
 #     return render_template('comment.html', form=form,comments=comments,pitch=pitch,user=user)
         
+
+
+@main.route('/like/<int:id>', methods=['POST', 'GET'])
+@login_required
+def upvote(id):
+    post = Pitches.query.get(id)
+    if post is None:
+        abort(404)
+        
+    upvote= Upvote.query.filter_by(user_id=current_user.id, pitch_id=id).first()
+    if upvote is not None:
+        
+        db.session.delete(upvote)
+        db.session.commit()
+        
+        return redirect(url_for('.index'))
+    
+    new_like = Upvote(
+        user_id=current_user.id,
+        pitch_id=id
+        
+    )
+    db.session.add(new_like)
+    db.session.commit()
+
+        
+    return redirect(url_for('main.index'))
+
+@main.route('/dislike/<int:id>', methods=['POST', 'GET'])
+@login_required
+def downvote(id):
+    post = Pitches.query.get(id)
+    if post is None:
+        abort(404)
+        
+    downvote= Downvote.query.filter_by(user_id=current_user.id, pitch_id=id).first()
+    if downvote is not None:
+        
+        db.session.delete(downvote)
+        db.session.commit()
+        
+        return redirect(url_for('.index'))
+    
+    new_like = Downvote(
+        user_id=current_user.id,
+        pitch_id=id
+        
+    )
+    db.session.add(new_like)
+    db.session.commit()
+
+        
+    return redirect(url_for('main.index'))

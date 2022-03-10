@@ -1,30 +1,30 @@
 {%macro display(pitch)%}
 
-<div  class="div">
+<div class="div">
     <ul style="align-items: center; padding-top: 1%; padding-bottom: 1% ; margin-left: 18%;" class="navbar-nav mr-auto">
         <li>
-            <a  href="/Category/Interview"><button type="button" class="btn btn-outline"
+            <a href="/Category/Interview"><button type="button" class="btn btn-outline"
                     style="margin-right: 15px; margin-left: 10%; background-color: fuchsia; color: black; font-size: 1.5em;">Interview
                 </button><span class="sr-only">(current)</span></a>
         </li>
         <li>
-            <a  href="/{{'category/Promotion'}}"><button type="button" class="btn btn-outline"
+            <a href="/{{'category/Promotion'}}"><button type="button" class="btn btn-outline"
                     style="margin-right: 15px; background-color: fuchsia; color: black; font-size: 1.5em;">Promotion</button></a>
         </li>
         <li>
-            <a  href="/{{'category/Products'}}"><button type="button" class="btn btn-outline"
+            <a href="/{{'category/Products'}}"><button type="button" class="btn btn-outline"
                     style="margin-right: 15px; background-color: fuchsia; color: black; font-size: 1.5em;">Products</button></a>
         </li>
         <li>
-            <a  href="/{{'category/PickupLines'}}"><button type="button" class="btn btn-outline"
+            <a href="/{{'category/PickupLines'}}"><button type="button" class="btn btn-outline"
                     style="margin-right: 15px; background-color: fuchsia; color: black; font-size: 1.5em;">PickupLines</button></a>
         </li>
         <li>
-            <a  href="/{{'category/Sports'}}"><button type="button" class="btn btn-outline"
+            <a href="/{{'category/Sports'}}"><button type="button" class="btn btn-outline"
                     style="margin-right: 15px; background-color: fuchsia; color: black; font-size: 1.5em;">Sports</button></a>
         </li>
         <li>
-            <a  href="/{{'category/Entertainment'}}"><button type="button" class="btn btn-outline"
+            <a href="/{{'category/Entertainment'}}"><button type="button" class="btn btn-outline"
                     style=" background-color: fuchsia; color: black; font-size: 1.5em;">Entertainment</button></a>
         </li>
     </ul>
@@ -33,34 +33,37 @@
 {%for pitches in pitch%}
 
 <div style="background-color: black;  padding-top: 10%;">
-    <div style="display: flex; flex-wrap: wrap;" class="row">
-        <div style="width: 65%; margin-top:1% ; padding:5% 5% 5% 5%; font-size: 25px; margin-left: 15%; text-align: center; border: 3px solid fuchsia;box-shadow: 10px 10px 15px fuchsia; background-color: gray; "
-            class="card">
+    <div class="row">
+        <div  class="col-md-4 ">
+            <div style=" margin-top:1% ; padding:5% 5% 5% 5%; font-size: 25px; margin-left: 15%; text-align: center; border: 3px solid fuchsia;box-shadow: 10px 10px 15px fuchsia; background-color: gray; "
+                class="card">
 
-            <div style="font-weight: bolder; font-size: larger;" class="card-header">
-                {{pitches.category}}
+                <div style="font-weight: bolder; font-size: larger;" class="card-header">
+                    {{pitches.category}}
 
+                </div>
+
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {{pitches.title}}
+                    </h4>
+                    <p style="padding-left: 5%; padding-right: 5%;" class="card-text">
+                        {{pitches.pitch}}
+                    </p>
+                    <button
+                        style="margin: 0 auto; border:none; padding: 2% 5% ; border-radius: 25px; font-size: 20px; margin-bottom: 4%; background-color: fuchsia;">Comments</button>
+                    
+                    <p>
+                        {{pitches.time}}
+                    </p>
+
+
+                </div>
             </div>
 
-            <div class="card-body">
-                <h4  class="card-title">
-                    {{pitches.title}}
-                </h4>
-                <p style="padding-left: 5%; padding-right: 5%;" class="card-text">
-                    {{pitches.pitch}}
-                </p>
-                <button
-                    style="margin: 0 auto; padding: 2% 5% ; border-radius: 25px; font-size: 20px; margin-bottom: 4%; background-color: fuchsia;">Comments</button>
-                <p>
-                    {{pitches.time}}
-                </p>
-
-
-            </div>
         </div>
     </div>
-</div>
 
 
-{% endfor %}
-{% endmacro %}
+    {% endfor %}
+    {% endmacro %}

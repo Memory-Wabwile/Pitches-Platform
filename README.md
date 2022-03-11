@@ -9,7 +9,7 @@ Pitches platform is an application that enables users to add their one minute pi
 
 
 ## Live Site
-click on  to view the site
+click on https://mempitches.herokuapp.com/ to view the site
 
 ## BDD
 

@@ -104,27 +104,27 @@ def user():
 
 
 
-@main.route('/comment/<int:pitch_id>', methods=['GET','POST'])
+@main.route('/comment/<int:id>', methods=['GET','POST'])
 @login_required
-def comment(pitch_id):
+def comment(id):
 
     form = CommentForm()
 
     
-    pitch = Pitches.query.get(pitch_id)
+    pitch = Pitches.query.get(id)
     user = User.query.all()
-    comments = Comment.query.filter_by(pitch_id=pitch_id).all()
+    comments = Comment.query.filter_by(pitch_id=id).all()
 
     if form.validate_on_submit():
         comment = form.comment.data
         pitch_id = pitch_id
         name = current_user._get_current_object().id
 
-        new_comment = Comment(comment=comment,pitch_id=pitch_id,name=name)
+        new_comment = Comment(comment=comment,pitch_id=id,name=name)
 
         new_comment.save_comment()
         flash('Comment added successfully')
-        return redirect(url_for('.comment', pitch_id = pitch_id))
+        return redirect(url_for('.comment', pitch_id = id))
     
     return render_template('comment.html', form=form,comments=comments,pitch=pitch,user=user)
         

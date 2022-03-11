@@ -19,7 +19,19 @@
             <div class="row">
                 <h1>ALL COMMENTS</h1>
                
-                
+                {% for comment in comments %}
+
+                    <div class="card w-50 mt-5">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p class="card-text">{{comment.comment}}</p>
+
+                        </div>
+                    </div><hr style="border-top: 4px solid grey; color:black;"/>
+               
+
+                {% endfor%}
+
             </div>
         </div>
     </div>

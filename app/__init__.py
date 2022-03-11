@@ -5,6 +5,9 @@ from flask_login import LoginManager
 from config import config_options
 from flask_uploads import UploadSet,configure_uploads,IMAGES
 from flask_mail import Mail
+import os
+
+
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
@@ -35,5 +38,8 @@ def create_app(config_name):
 
     # configure UploadSet
     configure_uploads(app,photos)
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
     return app

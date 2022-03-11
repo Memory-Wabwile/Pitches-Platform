@@ -110,21 +110,10 @@ def comment(pitch_id):
 
     form = CommentForm()
 
-    # title="This pitch's comments"
-    # pitch=Pitches.getPitchId(id)
-    # pitch_id=pitch.id
-    # pitch_id = Pitches.query.filter_by(pitch_id=id).all()
-    # user_det = User.get_id(id)
-    # user= user_det.username  ,user=user
-
-    # comments=Comment.get_comments(id)
-    # comments = Comment.query.filter_by(pitch_id=id).all()
-    
-    # return render_template('comments.html',title=title,pitch_comments=comments,pitch_id=pitch_id,pitch=pitch_id,form=form)
     
     pitch = Pitches.query.get(pitch_id)
     user = User.query.all()
-    comments = Comment.query.filter_by(pitch_id=pitch_id).all()
+    # comments = Comment.query.filter_by(pitch_id=pitch_id).all()
 
     if form.validate_on_submit():
         comment = form.comment.data
@@ -137,7 +126,7 @@ def comment(pitch_id):
         flash('Comment added successfully')
         return redirect(url_for('.comment', pitch_id = pitch_id))
     
-    return render_template('comment.html', form=form,comments=comments,pitch=pitch,user=user)
+    return render_template('comment.html', form=form,comments='comments',pitch=pitch,user=user)
         
 
 

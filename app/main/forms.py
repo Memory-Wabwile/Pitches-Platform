@@ -18,3 +18,10 @@ class PostForm(FlaskForm):
 class CommentForm(FlaskForm):
   comment = TextAreaField(' Comment:',validators=[DataRequired()])
   submit = SubmitField('Submit') 
+
+class PitchForm(FlaskForm):
+    title = StringField('Your Name', validators=[DataRequired()])
+    category = SelectField('Category', choices=[('Interview','Interview'),('Promotion','Promotion'),('PickupLines','PickupLines'),('Products','Products'),('Sports','Sports'),('Entertainment','Entertainment')],validators=[DataRequired()])
+    pitch = TextAreaField('Your Pitch', validators=[DataRequired()])
+    
+    submit = SubmitField('Submit')

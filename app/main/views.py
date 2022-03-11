@@ -5,7 +5,7 @@ from . import main
 from flask_login import current_user, login_required 
 from .forms import UpdateProfile
 from .. import db,photos
-from .forms import PostForm,CommentForm,UpdateProfile
+from .forms import PostForm,CommentForm,UpdateProfile,PitchForm
 from flask.helpers import flash
 
 
@@ -24,25 +24,19 @@ def index():
     pitch = Pitches.query.all()
     return render_template('index.html', Interview=Interview , Promotion=Promotion, Products=Products,PickupLines=PickupLines, Sports=Sports, Entertainment=Entertainment , pitch = pitch)
 
-@main.route('/pitch')
-@login_required
-def pitch():
-    pitch = Pitches.query.all()
-    votes = Upvote.query.all()
-    user = current_user
-    return render_template('pitch.html' , pitch=pitch , votes=votes,user=user)
-
 
 
 @main.route('/user/<uname>')
 @login_required
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
+    user_id = current_user._get_current_object().id
+    pitch = Pitches.query.filter_by(name=user_id).all()
 
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user=user)
+    return render_template("profile/profile.html", user=user , pitch=pitch)
 
 
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
@@ -77,25 +71,24 @@ def update_pic(uname):
     return redirect(url_for('main.profile',uname=uname))
 
 
-@main.route('/new_pitches',methods=['GET','POST'])
+@main.route('/pitch',methods=['GET','POST'])
 @login_required
 def new_pitches():
 
-    form = PostForm()
+    form = PitchForm()
 
     if form.validate_on_submit():
         title = form.title.data
         category = form.category.data
-        pitch = form.pitches.data
-        user_id = current_user._get_current_object().id
+        pitch = form.pitch.data
+        id = current_user._get_current_object().id
 
-        new_pitches = Pitches(title=title,pitch=pitch,category=category,user_id=user_id)
-        new_pitches.save()
+        new_pitches = Pitches(title=title,pitch=pitch,category=category)
         db.session.add(new_pitches)
         db.session.commit()
 
-        flash('Pitch Created successfully')
-        return redirect(url_for('main.index'))
+        flash('successful')
+        return redirect(url_for('main.index',form=form))
 
     return render_template('pitch.html', form=form)
 
@@ -111,29 +104,40 @@ def user():
 
 
 
-# @main.route('/comment/<int:pitch_id>', method=['GET','POST'])
-# @login_required
-# def comment(pitch_id):
+@main.route('/comment/<int:pitch_id>', methods=['GET','POST'])
+@login_required
+def comment(pitch_id):
 
-#     form = CommentForm()
+    form = CommentForm()
 
-#     pitch = Pitches.query.get(pitch_id)
-#     user = User.query.all()
-#     comments = Comment.query.filter_by(pitch_id=pitch_id).all()
+    # title="This pitch's comments"
+    # pitch=Pitches.getPitchId(id)
+    # pitch_id=pitch.id
+    # pitch_id = Pitches.query.filter_by(pitch_id=id).all()
+    # user_det = User.get_id(id)
+    # user= user_det.username  ,user=user
 
-#     if form.validate_on_submit():
-#         comment = form.comment.data
-#         pitch_id = pitch_id
-#         user_id = current_user._get_current_object().id
-
-#         new_comment = Comment(comment=comment,pitch_id=pitch_id,user_id=user_id)
-
-#         new_comment.save_comment()
-#         newest_comment= [new_comment]
-#         flash('Comment added successfully')
-#         return redirect(url_for('comment', pitch_id = pitch_id))
+    # comments=Comment.get_comments(id)
+    # comments = Comment.query.filter_by(pitch_id=id).all()
     
-#     return render_template('comment.html', form=form,comments=comments,pitch=pitch,user=user)
+    # return render_template('comments.html',title=title,pitch_comments=comments,pitch_id=pitch_id,pitch=pitch_id,form=form)
+    
+    pitch = Pitches.query.get(pitch_id)
+    user = User.query.all()
+    comments = Comment.query.filter_by(pitch_id=pitch_id).all()
+
+    if form.validate_on_submit():
+        comment = form.comment.data
+        pitch_id = pitch_id
+        name = current_user._get_current_object().id
+
+        new_comment = Comment(comment=comment,pitch_id=pitch_id,name=name)
+
+        new_comment.save_comment()
+        flash('Comment added successfully')
+        return redirect(url_for('.comment', pitch_id = pitch_id))
+    
+    return render_template('comment.html', form=form,comments=comments,pitch=pitch,user=user)
         
 
 
@@ -150,7 +154,7 @@ def upvote(id):
         db.session.delete(upvote)
         db.session.commit()
         
-        return redirect(url_for('.index'))
+        return redirect(url_for('main.index'))
     
     new_like = Upvote(
         user_id=current_user.id,
@@ -176,13 +180,14 @@ def downvote(id):
         db.session.delete(downvote)
         db.session.commit()
         
-        return redirect(url_for('.index'))
+        return redirect(url_for('main.index'))
     
     new_like = Downvote(
         user_id=current_user.id,
         pitch_id=id
         
     )
+    # new_like.save()
     db.session.add(new_like)
     db.session.commit()
 

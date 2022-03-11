@@ -1,29 +1,17 @@
-    <form action="{{ url_for('main.add_pitch')}}" enctype="multipart/form-data">
-        <div class="row">
-            <input type="hidden" name="user_id" value="{{ current_user.id}}">
-            <div class="col-md-8">
-                <div class="m-auto">
-                    <label for="Title" class="m-auto">Title</label>
-                    <input type="text" class="form-control" name="title" required>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="m-auto">
-                    <label for="Category" class="m-auto">Category</label>
-                    <select class="form-control" name="category_id" required>
-                        {% for category in categories %}
-                        <option value="{{ category.id }}">{{ category.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf%}
+
+{% block content %}
+<div style="background-color: gainsboro; height: 95vh; margin-top: -3%;" class="container-fluid">
+    <div>
+
+        <div style="width: 75%; margin-top:6% ; padding:5% 5% 5% 5%; font-size: 25px; margin-left: 15%; text-align: center; border: 3px solid fuchsia;box-shadow: 10px 10px 15px fuchsia; background-color: gray;"
+            class="card" >
+            <h2 class="text-center">CREATE A NEW PITCH</h2>
+            {{wtf.quick_form(form)}}
         </div>
-        <div class="m-auto">
-            <br>
-            <label for="Content" class="m-auto">Pitch</label>
-            <textarea class="form-control" name="content" required></textarea>
-        </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-block">Post Pitch</button>
-        </div>
-    </form>
+
+
+    </div>
+</div>
+{% endblock%}

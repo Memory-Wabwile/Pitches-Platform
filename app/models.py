@@ -45,7 +45,7 @@ class User(UserMixin,db.Model):
 class Pitches(db.Model):
     __tablename__ = 'pitch'
 
-    id = db.Column(db.Integer,primary_key = True)
+    id = db.Column(db.Integer,primary_key = True )
     title = db.Column(db.String(255))
     category = db.Column(db.String(255))
     pitch = db.Column(db.String(255))
@@ -54,6 +54,12 @@ class Pitches(db.Model):
     comment = db.relationship('Comment' , backref='pitches' , lazy='dynamic')
     upvote = db.relationship('Upvote' ,backref='pitches', lazy='dynamic' )
     downvote = db.relationship('Downvote' , backref='pitches' , lazy='dynamic')
+
+
+    @classmethod
+    def get_pitches(cls, category):
+        pitches= Pitches.query.filter_by(category=category).all()
+        return pitches
 
     def save_pitch(self):
         db.session.add(self)
@@ -73,7 +79,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     comment = db.Column(db.Text(),nullable = False)
     name = db.Column(db.Integer , db.ForeignKey('users.id'))
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'),nullable = False)
 
     def save_comment(self):
         db.session.add(self)
@@ -99,12 +105,17 @@ class Upvote(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def save_upvote(self):
+    def delete_upvote(self):
         db.session.add(self)
         db.session.commit()
 
+    @classmethod
+    def get_upvotes(cls, id):
+        upvote = Upvote.query.filter_by(pitch_id=id).all()
+        return upvote
+
     def __repr__(self):
-        return f'Upvote:{self}'
+         return f'{self.user_id}:{self.post_id}'
 
 
 class Downvote(db.Model):
@@ -122,6 +133,11 @@ class Downvote(db.Model):
     def delete_downvote(self):
         db.session.add(self)
         db.session.commit()
+
+    @classmethod
+    def get_downvotes(cls, id):
+        downvote = Downvote.query.filter_by(pitch_id=id).all()
+        return downvote
 
     def __repr__(self):
         return f'downvote : {self.downvote}'

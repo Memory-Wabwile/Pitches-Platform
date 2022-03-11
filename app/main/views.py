@@ -113,7 +113,7 @@ def comment(pitch_id):
     
     pitch = Pitches.query.get(pitch_id)
     user = User.query.all()
-    comments = Comment.query.filter_by(pitch_id=pitch_id).all()
+    comments = Comment.query.all()
 
     if form.validate_on_submit():
         comment = form.comment.data
